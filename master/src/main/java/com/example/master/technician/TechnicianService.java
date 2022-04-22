@@ -24,8 +24,8 @@ public class TechnicianService {
         return technicianRepository.selectAllTechnician();
     }
 
-    public List<Technician> getAvailable() {
-        return technicianRepository.selectAvailableTechnician();
+    public List<Technician> getAvailable(String platform) {
+        return technicianRepository.selectAvailableTechnician(platform);
     }
 
     public int updateQueue(Technician technician){

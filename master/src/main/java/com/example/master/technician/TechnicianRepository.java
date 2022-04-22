@@ -31,7 +31,7 @@ public class TechnicianRepository {
         return jdbcTemplate.query(sql, mapTechnician());
     }
 
-    List<Technician> selectAvailableTechnician() {
+    List<Technician> selectAvailableTechnician(String platform) {
         String sql = "" +
                 "SELECT " +
                 " id, " +
@@ -40,11 +40,11 @@ public class TechnicianRepository {
                 " platform, " +
                 " queue " +
                 "FROM technician "+
-                "WHERE queue < 3 "+
+                "WHERE queue < 3 and platform = ? "+
                 "LIMIT 1";
         System.out.println(sql);
 
-        return jdbcTemplate.query(sql, mapTechnician());
+        return jdbcTemplate.query(sql, mapTechnician(), platform);
     }
 
     int insertTechnician(Technician technician) {

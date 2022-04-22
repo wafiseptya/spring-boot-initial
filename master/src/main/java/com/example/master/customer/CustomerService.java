@@ -17,18 +17,14 @@ public class CustomerService {
     }
 
     public int createTechnician(Customer customer){
-        return customerRepository.insertTechnician(customer);
+        return customerRepository.insertCustomer(customer);
     }
 
     public List<Customer> getAll() {
         return customerRepository.selectAllCustomer();
     }
 
-    public List<Customer> getAvailable() {
-        return customerRepository.selectAvailableCustomer();
-    }
-
-    public int updateQueue(UUID uuid, Integer queue){
-        return customerRepository.updateQueue(uuid, queue);
+    public int updateQueue(Customer customer){
+        return customerRepository.updateQueue(customer);
     }
 }

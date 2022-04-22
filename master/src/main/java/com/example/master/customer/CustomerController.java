@@ -1,5 +1,6 @@
 package com.example.master.customer;
 
+import com.example.master.technician.Technician;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,10 @@ public class CustomerController {
         customerService.createTechnician(customer);
     }
 
+    @PostMapping(path = "/update")
+    public void updateQueue(@RequestBody Customer customer){
+        customerService.updateQueue(customer);
+    }
     @GetMapping
     public List<Customer> getAllTechnician(){
         return customerService.getAll();

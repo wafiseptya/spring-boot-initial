@@ -22,60 +22,67 @@ public class CustomerRepository {
                 "SELECT " +
                 " id, " +
                 " name, " +
-                " specialist, " +
-                " platform, " +
-                " queue " +
+                " email, " +
+                " address, " +
+                " phone_number, " +
+                " phone_brand, " +
+                " damage, " +
+                " price, " +
+                " status " +
                 "FROM customer";
 
-        return jdbcTemplate.query(sql, mapTechnician());
+        return jdbcTemplate.query(sql, mapCustomer());
     }
 
-    List<Customer> selectAvailableCustomer() {
-        String sql = "SELECT " +
-                " id, name, specialist, platform, queue" +
-                "FROM customer" +
-                "WHERE queue < 3";
-
-        return jdbcTemplate.query(sql, mapTechnician());
-    }
-
-    int insertTechnician(Customer customer) {
+    int insertCustomer(Customer customer) {
 //        UUID uuid = UUID.randomUUID();
         String sql = "" +
-                "INSERT INTO customer (name, specialist, platform, queue) " +
-                "VALUES (?, ?, ?, ?)";
+                "INSERT INTO customer (name, email, address, phone_number, phone_brand, damage, price, status) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         return jdbcTemplate.update(
                 sql,
                 customer.getName(),
-                customer.getSpecialist(),
-                customer.getPlatform(),
-                0
+                customer.getEmail(),
+                customer.getAddress(),
+                customer.getPhone_number(),
+                customer.getPhone_brand(),
+                customer.getDamage(),
+                customer.getPrice(),
+                customer.getStatus()
         );
     }
 
-    private RowMapper<Customer> mapTechnician() {
+    private RowMapper<Customer> mapCustomer() {
         return (resultSet, i) -> {
             Integer id = resultSet.getInt("id");
             String name = resultSet.getString("name");
-            String specialist = resultSet.getString("specialist");
-            String platform = resultSet.getString("platform");
-            Integer queue = resultSet.getInt("queue");
+            String email = resultSet.getString("email");
+            String address = resultSet.getString("address");
+            String phone_number = resultSet.getString("phone_number");
+            String phone_brand = resultSet.getString("phone_brand");
+            String damage = resultSet.getString("damage");
+            Integer price = resultSet.getInt("price");
+            String status = resultSet.getString("status");
 
             return new Customer(
                     id,
                     name,
-                    specialist,
-                    platform,
-                    queue
+                    email,
+                    address,
+                    phone_number,
+                    phone_brand,
+                    damage,
+                    price,
+                    status
             );
         };
     }
 
-    int updateQueue(UUID uuid, Integer queue) {
+    int updateQueue(Customer customer) {
         String sql = "" +
-                "UPDATE technician " +
-                "SET queue = ? " +
-                "WHERE uuid = ?";
-        return jdbcTemplate.update(sql, queue, uuid);
+                "UPDATE customer " +
+                "SET status = ? " +
+                "WHERE status = 'on progress' and email = ?";
+        return jdbcTemplate.update(sql, customer.getStatus(), customer.getEmail());
     }
 }

@@ -26,10 +26,16 @@ public class TechnicianController {
         technicianService.updateQueue(technician);
     }
 
+    @GetMapping(path = "{platform}")
+    public List<Technician> getAvailableTechnician(@PathVariable("platform") String platform){
+        System.out.println("New request");
+
+        return technicianService.getAvailable(platform);
+    }
     @GetMapping
     public List<Technician> getAvailableTechnician(){
         System.out.println("New request");
 
-        return technicianService.getAvailable();
+        return technicianService.getAll();
     }
 }
